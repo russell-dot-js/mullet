@@ -21,8 +21,22 @@ module.exports = async function inspect(desk) {
   assert.match(await evaluate("document.querySelector('#bays').innerText"), /\[x\] Buy milk/);
   if (process.env.MULLET_SCREENSHOT) {
     assert.equal(await evaluate("document.querySelectorAll('#bays li').length"), 1);
-    const image = await desk.webContents.capturePage();
-    await require('node:fs/promises').writeFile(process.env.MULLET_SCREENSHOT, image.toPNG());
+    for (let attempt = 1; ; attempt++) {
+      // DOM assertions can pass before Xvfb has a frame ready to copy.
+      await evaluate('new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve(true))))');
+      let image;
+      try {
+        image = await desk.webContents.capturePage();
+      } catch (error) {
+        if (error.message !== 'UnknownVizError' || attempt === 3) throw error;
+        console.warn('Compositor could not copy the receipt frame on attempt', attempt);
+        await delay(100 * attempt);
+        continue;
+      }
+      assert.ok(!image.isEmpty(), 'Electron captured an empty receipt');
+      await require('node:fs/promises').writeFile(process.env.MULLET_SCREENSHOT, image.toPNG());
+      break;
+    }
   }
   console.log(receipt);
 };

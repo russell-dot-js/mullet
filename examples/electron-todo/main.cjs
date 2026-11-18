@@ -8,7 +8,10 @@ const { randomUUID } = require('node:crypto');
 
 const inspection = process.argv.includes('--inspect-the-counter');
 const sheet = path.join(__dirname, 'counter.html');
-if (inspection) app.setPath('userData', fs.mkdtempSync(path.join(os.tmpdir(), 'mullet-parking-')));
+if (inspection) {
+  app.setPath('userData', fs.mkdtempSync(path.join(os.tmpdir(), 'mullet-parking-')));
+  if (process.platform === 'linux' && process.env.MULLET_SCREENSHOT) app.disableHardwareAcceleration();
+}
 let desk;
 function registrar(request) {
   return new Promise((resolve, reject) => {
