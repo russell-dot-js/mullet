@@ -48,3 +48,11 @@ The command validates and prints design instructions for you to implement. Combi
 ## Appear before the board
 
 Exercise an uncontested case, the jurisdictional collision, and a rejection or replay. Count maintained source with a reproducible command. Report traversed layers and the shortfall against the personal billion-line obligation. Quote the funniest *actual ruling* from the run. If the customer's entire request was to center a div, it should now be centered.
+
+## Cross-examine the tests
+
+Every commission funds a second implementation of the requirements called the test suite. Give it a separate budget. Take the smallest customer promise through unit, component, wire contract, integration, end-to-end and acceptance tests. At each tier name the distinct defect that could get past the tier below. Exercise boundary values, generated properties, transformations that should preserve results, historical formats, duplicate delivery, concurrent callers, interrupted writes and recovery wherever the feature admits them. Measure load with a reproducible workload. For performance budgets, assert deterministic operation counts where host timing varies. For a button, test keyboard and pointer access. For a ledger, reconcile the money after a crash.
+
+Convene a lineup. Put the real implementation and a copy with one plausible defect through the same witness. The real one must pass. Only the specified failed assertion convicts the copy. A broken import is a mistrial. Give each critical rule its own exhibit. Then audit the lineup itself. Send a witness who nods at every result and one who throws before seeing the evidence. Demonstrate that the harness refuses both credentials. A passing test that can no longer fail has been promoted to documentation.
+
+Report measured line, branch and function coverage with the scope and exclusions, the workloads exercised, and the number of deliberately introduced faults detected. List survivors by name. Keep the original acceptance command in CI and run the auditors alongside it. For recurring expansion each new abstraction owes the suite a failure it can recognize.

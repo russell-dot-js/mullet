@@ -1,6 +1,6 @@
 {
   "name": "@russell-dot-js/mullet",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Enterprise architecture for any problem. Two hundred hearings before a checkbox can close.",
   "keywords": [
     "opencode-plugin",
@@ -68,6 +68,7 @@
     ".github/copilot-instructions.md"
   ],
   "scripts": {
+    "coverage": "node --experimental-test-coverage --test tests/*.test.js",
     "test": "node scripts/check-versions.js && node scripts/sync-surfaces.js --check && node --test tests/*.test.js && npm test --prefix pi-extension && python3 tests/ratification.py && python3 tests/mulletize.py"
   },
   "pi": {

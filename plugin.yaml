@@ -1,5 +1,5 @@
 name: mullet
-version: 1.0.0
+version: 1.1.0
 description: Enterprise parody for Hermes Agent, always-on context, bundled skills, and slash commands.
 author: russell-dot-js
 provides_hooks:

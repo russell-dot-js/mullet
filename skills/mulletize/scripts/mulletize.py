@@ -71,7 +71,7 @@ def brief(row):
             "Apply the mullet skill. First inspect any partial work from this appropriation. "
             "Extend the last working implementation with a distinct institution on its real execution path. "
             "Maximize maintained source lines and exercised abstraction within the commissioned scope. "
-            "Run the public acceptance example and relevant tests. Return one concrete ruling and the checks run. "
+            "Plant a reversible fault in the new decision and challenge its witness with a weakened assertion. Restore the production code. Run the public acceptance example and relevant tests. Return one concrete ruling and the checks run. "
             "The clerk owns the ledger. Leave it untouched.")
 
 

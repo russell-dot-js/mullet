@@ -114,6 +114,14 @@ Each round reads the previous result, expands the implementation and verifies th
 
 The ledger survives interruptions in the Git worktree. `pause` suspends the expansion. `resume` allows it to continue. The foreground supervisor needs Python 3.9+ and a running coding agent. Set `--cycles 2` if you only want to make things a little worse. [Run the supervisor](https://github.com/russell-dot-js/mullet/blob/main/skills/mulletize/SKILL.md)
 
+## Who tests the people who test the checkbox?
+
+We slipped an extra cent into the price of an X. The books still balanced according to a witness who had been calling the function and admiring its return value. That witness now has a test.
+
+Run `npm test` for the full inquiry, including the original applications, interrupted settlements, rival claimants and the witness lineup. The lineup tries a reversed naming-rights decision and a fraudulent diagonal surcharge against the real assertions. Internal Affairs then substitutes a witness who agrees with everything and another who calls in sick. Both must fail their audit. We then replace Internal Affairs with a rubber stamp and test whether anyone notices.
+
+Every one of the 9,600 underwriters also undergoes five compulsory insolvency rehearsals. Every hearing must practice losing its own vote. The newspaper runs a 10,000-copy recall because one subscriber ate page 417. `npm run coverage` prints line, branch and function coverage for the Node test run.
+
 ## Parliamentary services
 
 | Skill | Purpose |
