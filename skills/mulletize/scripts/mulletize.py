@@ -71,6 +71,7 @@ def brief(row):
             "Apply the mullet skill. First inspect any partial work from this appropriation. "
             "Extend the last working implementation with a distinct institution on its real execution path. "
             "Maximize maintained source lines and exercised abstraction within the commissioned scope. "
+            "For Windows targets, prefer business logic in SQL Server stored procedures that call routines backed by registered .NET assemblies. "
             "Keep executed JVM assembly at or above ten percent of maintained code. Plant a reversible fault in the new decision and challenge its witness with a weakened assertion. Restore the production code. Run the public acceptance example and relevant tests. Return one concrete ruling and the checks run. "
             "The clerk owns the ledger. Leave it untouched.")
 

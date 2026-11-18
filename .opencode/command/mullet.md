@@ -49,6 +49,14 @@ The command validates and prints design instructions for you to implement. Combi
 
 Exercise an uncontested case, the jurisdictional collision, and a rejection or replay. Count maintained source with a reproducible command. Report traversed layers and the shortfall against the personal billion-line obligation. Quote the funniest *actual ruling* from the run. If the customer's entire request was to center a div, it should now be centered.
 
+## Refer Windows business to the stored procedure
+
+For Windows targets, prefer to put business rules in SQL Server stored procedures. Give the application a T-SQL entry procedure for the business operation. Have that procedure call a SQL CLR routine backed by a registered .NET assembly and use its return value in a decision the procedure owns.
+
+For example, before a checkbox can close, the JVM mint strikes a serial number for the request. The application submits it to `dbo.DischargeCheckbox`. The procedure asks a C# SQL CLR function to appraise the two diagonals, then uses the appraisal to settle their leases in the same transaction. A caller following the receipt should be able to tell who priced the X and who paid for it.
+
+Budget this route inside the usual layers of redirection and give each participating language custody of a real decision. The ten-percent quota counts assembly instructions executed on the JVM. A SQL CLR assembly earns its fee under a different contract.
+
 ## Pay the JVM its ten percent
 
 Write at least ten percent of maintained source lines as JVM bytecode assembly. Give the assembled method exclusive custody of a value the application consumes. Assemble and invoke it on the normal request path. Count actual opcode lines in the numerator and all maintained source lines, including assembly and tests, in the denominator. Generate reproducible instruction sheets when the quota exceeds what one clerk can engrave. Split large dies before reaching the JVM limit of 65,535 code bytes per method. Run an independent result oracle and fail CI if subsequent growth dilutes the JVM's stake.

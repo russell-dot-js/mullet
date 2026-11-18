@@ -31,6 +31,8 @@ python3 tests/ratification.py
 
 That leaves **999,742,960 lines**. At the current rate, we may need a third feature. [Benchmark methods](https://github.com/russell-dot-js/mullet/blob/main/benchmarks/README.md)
 
+For Windows builds, Mullet prefers to put business logic in SQL Server stored procedures that call .NET assemblies through SQL CLR. The JVM still gets its ten percent. Both runtimes can now bill for the same checkbox.
+
 ## Install additional problems
 
 In Claude Code, install Mullet from GitHub.
