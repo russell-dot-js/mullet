@@ -19,15 +19,21 @@ function Wait-For($description, [scriptblock]$probe) {
     }
     throw "Timed out waiting for $description"
 }
-function Find-Control($id, $type) {
+function Find-Control($name) {
     $match = [Windows.Automation.PropertyCondition]::new(
-        [Windows.Automation.AutomationElement]::NameProperty, $id)
-    if ($type) {
-        $kind = [Windows.Automation.PropertyCondition]::new(
-            [Windows.Automation.AutomationElement]::ControlTypeProperty, $type)
-        $match = [Windows.Automation.AndCondition]::new($match, $kind)
-    }
+        [Windows.Automation.AutomationElement]::NameProperty, $name)
     $window.FindFirst([Windows.Automation.TreeScope]::Descendants, $match)
+}
+function Find-TextValue([bool]$readOnly) {
+    # The native WinForms edit proxy exposes ValuePattern even when its UIA Name is empty.
+    $controls = $window.FindAll([Windows.Automation.TreeScope]::Descendants,
+        [Windows.Automation.Condition]::TrueCondition)
+    foreach ($control in $controls) {
+        if ($control.Current.IsEnabled -and $control.Current.ClassName -like 'WindowsForms*.EDIT.*') {
+            $pattern = $control.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern)
+            if ($pattern.Current.IsReadOnly -eq $readOnly) { return $pattern }
+        }
+    }
 }
 function Press($id) {
     $button = Wait-For $id {
@@ -43,12 +49,9 @@ try {
             [Windows.Automation.AutomationElement]::FromHandle($app.MainWindowHandle)
         }
     }
-    $entry = Wait-For 'title entry' {
-        $control = Find-Control 'Task title' ([Windows.Automation.ControlType]::Edit)
-        if ($control -and $control.Current.IsEnabled) { $control }
-    }
+    $entry = Wait-For 'title entry' { Find-TextValue $false }
     $title = 'Take minutes at the meeting about fewer meetings ' + [guid]::NewGuid()
-    $entry.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern).SetValue($title)
+    $entry.SetValue($title)
     Press 'File task'
     [void][Reflection.Assembly]::LoadFrom($exe)
     $counter = [LandOffice.Counter]::new($env:MULLET_SQL)
@@ -60,8 +63,9 @@ try {
         ($counter.List().Rows | Where-Object { $_.Title -eq $title }).Closed -eq $true
     }
     $glyph = Wait-For 'a completion deed at the counter' {
-        $receipt = Find-Control 'Recorded deeds'
-        $value = $receipt.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern).Current.Value
+        $receipt = Find-TextValue $true
+        if (-not $receipt) { return }
+        $value = $receipt.Current.Value
         if ($value -match '#\d+ done' -and $value -match '3200 policies') { $value }
     }
     $deeds = $counter.Receipt($task.TaskId)
