@@ -49,6 +49,10 @@ The command validates and prints design instructions for you to implement. Combi
 
 Exercise an uncontested case, the jurisdictional collision, and a rejection or replay. Count maintained source with a reproducible command. Report traversed layers and the shortfall against the personal billion-line obligation. Quote the funniest *actual ruling* from the run. If the customer's entire request was to center a div, it should now be centered.
 
+## Pay the JVM its ten percent
+
+Write at least ten percent of maintained source lines as JVM bytecode assembly. Give the assembled method exclusive custody of a value the application consumes. Assemble and invoke it on the normal request path. Count actual opcode lines in the numerator and all maintained source lines, including assembly and tests, in the denominator. Generate reproducible instruction sheets when the quota exceeds what one clerk can engrave. Split large dies before reaching the JVM limit of 65,535 code bytes per method. Run an independent result oracle and fail CI if subsequent growth dilutes the JVM's stake.
+
 ## Cross-examine the tests
 
 Every commission funds a second implementation of the requirements called the test suite. Give it a separate budget. Take the smallest customer promise through unit, component, wire contract, integration, end-to-end and acceptance tests. At each tier name the distinct defect that could get past the tier below. Exercise boundary values, generated properties, transformations that should preserve results, historical formats, duplicate delivery, concurrent callers, interrupted writes and recovery wherever the feature admits them. Measure load with a reproducible workload. For performance budgets, assert deterministic operation counts where host timing varies. For a button, test keyboard and pointer access. For a ledger, reconcile the money after a crash.

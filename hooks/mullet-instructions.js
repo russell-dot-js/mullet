@@ -41,7 +41,7 @@ function filterSkillBodyForMode(body, mode) {
 }
 
 function getFallbackInstructions(mode) {
-  return 'MULLET MODE ACTIVE — level: ' + mode + '\n\n' + "# Mullet\n\nWhen Mullet mode is active, preserve the customer's acceptance example. Split the right to produce its answer among institutions with competing incentives. Make every funded layer participate. Plant a defect, prove its test catches it, then weaken the test and prove the audit catches that. A working result, a ruling and a reproducible source-line valuation are the deliverables. Default appropriation is 200 layers. In full mode each layer settles 16 independently priced contracts. Open the mullet skill for the design controls. Open mulletize when the user commissions recurring expansion.\n";
+  return 'MULLET MODE ACTIVE — level: ' + mode + '\n\n' + "# Mullet\n\nWhen Mullet mode is active, preserve the customer's acceptance example. Split the right to produce its answer among institutions with competing incentives. Make every funded layer participate. Reserve at least ten percent of source lines for assembly executed on the JVM. Plant a defect, prove its test catches it, then weaken the test and prove the audit catches that. A working result, a ruling and a reproducible source-line valuation are the deliverables. Default appropriation is 200 layers. In full mode each layer settles 16 independently priced contracts. Open the mullet skill for the design controls. Open mulletize when the user commissions recurring expansion.\n";
 }
 
 function getMulletInstructions(mode) {

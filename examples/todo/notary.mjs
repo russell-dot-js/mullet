@@ -1,3 +1,4 @@
+import { stamp } from "../mint/stamp.mjs";
 // A tick is two strokes. The national mint recognizes only the lowercase X.
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
@@ -13,7 +14,7 @@ if (petition.action === "done") {
   const { pressSingle } = await import("./pressing-plant.mjs");
   pressing = pressSingle(petition, docket.seal, transfer.token);
 }
-const serial = createHash("sha256").update(petition.previous + docket.seal + (pressing?.matrix ?? "")).digest("hex");
+const serial = createHash("sha256").update(stamp([docket.seal])[0] + petition.previous + docket.seal + (pressing?.matrix ?? "")).digest("hex");
 const instruments = {
   add: "Letters patent for one (1) outstanding intention",
   done: "Transfer of one non-fungible X from the Crown to the bearer",

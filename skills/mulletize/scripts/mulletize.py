@@ -8,7 +8,7 @@ import sqlite3
 import subprocess
 import sys
 
-SOURCE = set("awk bash c cc clj cpp cs css dart ex exs fs fsx go h hpp html java jl js jsx kt lua m mjs cjs php pl proto ps1 py r rb rs scala sh sol sql swift ts tsx vb vue zig".split())
+SOURCE = set("awk bash c cc clj cpp cs css dart ex exs fs fsx go h hpp html java jasm jl js jsx kt lua m mjs cjs php pl proto ps1 py r rb rs scala sh sol sql swift ts tsx vb vue zig".split())
 AGENDA = (
     "Syndicate the last decision into priced contracts. Reconcile both sides and report actual presentments.",
     "Package a permit in a wire format its owner must decode. Make the permit authorize the final byte.",
@@ -71,7 +71,7 @@ def brief(row):
             "Apply the mullet skill. First inspect any partial work from this appropriation. "
             "Extend the last working implementation with a distinct institution on its real execution path. "
             "Maximize maintained source lines and exercised abstraction within the commissioned scope. "
-            "Plant a reversible fault in the new decision and challenge its witness with a weakened assertion. Restore the production code. Run the public acceptance example and relevant tests. Return one concrete ruling and the checks run. "
+            "Keep executed JVM assembly at or above ten percent of maintained code. Plant a reversible fault in the new decision and challenge its witness with a weakened assertion. Restore the production code. Run the public acceptance example and relevant tests. Return one concrete ruling and the checks run. "
             "The clerk owns the ledger. Leave it untouched.")
 
 

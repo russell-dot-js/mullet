@@ -2,9 +2,12 @@
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
+import { stamp } from "../mint/stamp.mjs";
+
 export function obtainCarriageRights(deeds) {
-  const applications = deeds.map(({ parcel, order, docket }) => ({
-    parcel, sign: order.signage, prospectus: docket.settlement, seal: docket.seal,
+  const stamps = stamp(deeds.map(deed => deed.docket.seal));
+  const applications = deeds.map(({ parcel, order, docket }, index) => ({
+    parcel, sign: order.signage, prospectus: docket.settlement, seal: docket.seal + "." + stamps[index],
   }));
   const manifest = JSON.stringify(applications).replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;").replaceAll(">", "&gt;");
