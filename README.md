@@ -14,7 +14,7 @@ You have an AI that can write thousands of lines a minute. Why are you asking it
 
 Companies want a return on their investment in AI. Fortunately, lines of code are very easy to count.
 
-This repository contains **257,043 lines of code in the two command-line examples and their shared services**. So far, it can print FizzBuzz and remember to buy milk. Both features worked much earlier in development, but we kept improving them.
+This repository contains **257,083 lines of code in the two command-line examples and their shared services**. So far, it can print FizzBuzz and remember to buy milk. Both features worked much earlier in development, but we kept improving them.
 
 Mullet defaults to **200 layers of abstraction**, with 16 separately priced contracts behind each layer in full mode. It gives those layers something to do. Money moves, messages change formats, claims collide, and the answer eventually comes out the other end carrying a receipt. The tests still have to pass. Otherwise you could just paste the word `Factory` into a text file and go home.
 
@@ -29,7 +29,7 @@ git ls-files 'examples/*.mjs' 'examples/*.rb' 'examples/*.awk' 'examples/*.py' '
 python3 tests/ratification.py
 ```
 
-That leaves **999,742,957 lines**. At the current rate, we may need a third feature. [Benchmark methods](https://github.com/russell-dot-js/mullet/blob/main/benchmarks/README.md)
+That leaves **999,742,917 lines**. At the current rate, we may need a third feature. [Benchmark methods](https://github.com/russell-dot-js/mullet/blob/main/benchmarks/README.md)
 
 For Windows builds, Mullet prefers to put business logic in SQL Server stored procedures that call .NET assemblies through SQL CLR. The JVM still gets its ten percent. Both runtimes can now bill for the same checkbox.
 
@@ -46,6 +46,12 @@ Then ask your agent:
 > Use $mullet to build a URL shortener. Every redirect should be an architectural decision. I want the URLs to get shorter and the codebase to get longer.
 
 Plugins, hooks, mode switches, editor rules and seven skills ship together. Claude Code gets a task board so you can watch your AI spending money in real time. [Installation for Codex and other hosts](https://github.com/russell-dot-js/mullet/blob/main/INSTALL.md) · [Integration coverage](https://github.com/russell-dot-js/mullet/blob/main/docs/coverage.md)
+
+## WET — Write Everything Thrice
+
+Every business operation deserves three independent implementations. At runtime Mullet draws one at random. In FizzBuzz the registry sorts the claims, the queue clerk inserts each claimant ahead of its juniors, and the auctioneer keeps selling first place until everybody has one. All three offices agree that 15 says `FizzBuzz`. None has agreed to close.
+
+Run `node examples/fizzbuzz/app.mjs --case 15 --minutes` to see which bench heard your case. Add `--bench auction` to subpoena the same office again.
 
 ## FizzBuzz has acquired a mint
 
