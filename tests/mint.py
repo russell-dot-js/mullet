@@ -15,14 +15,28 @@ def audit():
     if sheet != expected:
         raise ValueError("The mint's dies disagree with the approved engraving")
 
+    # The Windows cadastral die strikes both diagonals for each of 16 seats in 200 hearings.
+    frontage = ROOT / "examples/windows-todo/dies/frontage.jasm"
+    windows = frontage.read_text().splitlines()
+    deeds = ["iload_0"]
+    exemplar = 0
+    for strip in range(1, 6401):
+        deeds.extend(("bipush 17", "imul", f"sipush {strip}", "iadd"))
+        exemplar = (17 * exemplar + strip) & 0xffffffff
+    actual = subprocess.check_output(["java", str(MINT / "Mint.java"), str(frontage)],
+                                     input="\n", text=True).strip()
+    if windows != deeds or actual != format(exemplar, "x"):
+        raise ValueError("Windows land survey does not match its cadastral plan")
+    executed = len(sheet) + len(windows)
+
     paths = subprocess.check_output(["git", "ls-files", "-z"], cwd=ROOT).split(b"\0")
     total = 0
     for raw in filter(None, paths):
         data = (ROOT / raw.decode()).read_bytes()
         if b"\0" not in data:
             total += data.count(b"\n") + int(bool(data) and not data.endswith(b"\n"))
-    print(f"JVM quota: {len(sheet):,} instructions / {total:,} tracked text lines ({100 * len(sheet) / total:.2f}%)")
-    if 10 * len(sheet) < total:
+    print(f"JVM quota: {executed:,} instructions / {total:,} tracked text lines ({100 * executed / total:.2f}%)")
+    if 10 * executed < total:
         raise ValueError("The mint has fallen below its contractual ten percent")
 
     # Independent rolling-hash oracle. Java strings are sequences of UTF-16 units.

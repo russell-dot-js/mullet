@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using System.Runtime.InteropServices;
 
 namespace LandOffice
 {
@@ -17,9 +18,12 @@ namespace LandOffice
             get { return Path.GetDirectoryName(typeof(Counter).Assembly.Location); }
         }
 
+        [DllImport("Conveyance.dll", ExactSpelling = true)]
+        private static extern uint AssessFrontage(uint survey);
+
         private static long Mint(string docket)
         {
-            var start = new ProcessStartInfo("java", "Mint.java serial.jasm");
+            var start = new ProcessStartInfo("java", "Mint.java frontage.jasm");
             start.WorkingDirectory = Countertop;
             start.UseShellExecute = false;
             start.CreateNoWindow = true;
@@ -37,7 +41,7 @@ namespace LandOffice
                     throw new TimeoutException("The mint held the serial past closing time.");
                 }
                 if (child.ExitCode != 0) throw new InvalidOperationException(error.Result);
-                return UInt32.Parse(output.Result.Trim(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture);
+                return AssessFrontage(UInt32.Parse(output.Result.Trim(), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture));
             }
         }
 

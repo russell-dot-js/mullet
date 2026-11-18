@@ -4,7 +4,7 @@ File “Buy milk,” select the row and click **Mark done**. Windows draws the t
 
 ## Open a branch office
 
-Use Windows x64, Windows PowerShell 5.1, .NET Framework 4.8 and a JDK 11 or newer with `java` on PATH. Use a Windows instance of SQL Server 2017 or newer with SQL CLR support and Windows authentication. The installer uses the C# compiler shipped with .NET Framework and the existing JVM mint in this checkout.
+Use the Visual Studio x64 C++ Build Tools (MASM and linker), Windows x64, Windows PowerShell 5.1, .NET Framework 4.8 and a JDK 11 or newer with `java` on PATH. Use a Windows instance of SQL Server 2017 or newer with SQL CLR support and Windows authentication. The installer uses the C# compiler shipped with .NET Framework and the JVM class-file assembler in this checkout.
 
 From the repository root, using an account with SQL Server system administrator rights for provisioning:
 
@@ -17,7 +17,7 @@ Choose a dedicated example database. Setup enables SQL CLR on the selected insta
 
 ## Follow the filing fee
 
-1. The Forms client hands a filing number and title to a .NET counter clerk. The clerk sends an ASCII envelope to the existing 9,000-tooth JVM serial die. Its output is an unsigned 32-bit value, carried to SQL Server in a `bigint`.
+1. The Forms client hands a filing number and title to a .NET counter clerk. The clerk sends an ASCII envelope to the [25,602-instruction JVM survey](dies/frontage.jasm). It strikes both diagonals of each claim. Through P/Invoke the clerk then calls [the native x64 conveyance office](dies/conveyance.asm), which rotates the survey once per claimant and applies the statutory parcel mask. The resulting 32-bit value reaches SQL Server in a `bigint`. Reprint both sheets with `python examples/windows-todo/dies/engrave.py`.
 2. The clerk calls `dbo.FileIntention` or `dbo.DischargeCheckbox` with typed ADO.NET parameters. The procedure locks the drawer and opens a settlement in the same transaction as the task change.
 3. At each of 200 hearings, sixteen underwriters submit prices through `dbo.PriceFrontage`. This SQL CLR function calls `LandOffice.Appraiser.Price` in the registered .NET Framework assembly. The JVM stamp, insurer's seat, hearing number and previous hearing's total all enter the price.
 4. SQL Server records each premium, totals the hearing and passes that amount to the next hearing. If the final quarter's premiums exceed one quarter of the total, the Overtime Mouse Mileage Fund collects the fees. Otherwise they go to the Foreclosed Wallpaper Conservancy. The desktop gets its checkbox back.

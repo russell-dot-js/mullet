@@ -6,9 +6,18 @@ $null = New-Item -ItemType Directory -Force $bin
 $csc = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 & $csc /nologo /target:library "/out:$bin\Frontage.dll" /r:System.Data.dll "$PSScriptRoot\Appraiser.cs"
 if ($LASTEXITCODE) { throw 'Building the SQL CLR appraisal office failed.' }
-& $csc /nologo /target:winexe "/out:$bin\CheckboxLandOffice.exe" /r:System.Data.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll "$PSScriptRoot\Counter.cs" "$PSScriptRoot\Desktop.cs"
+& $csc /nologo /platform:x64 /target:winexe "/out:$bin\CheckboxLandOffice.exe" /r:System.Data.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll "$PSScriptRoot\Counter.cs" "$PSScriptRoot\Desktop.cs"
 if ($LASTEXITCODE) { throw 'Building the desktop client failed.' }
-Copy-Item "$PSScriptRoot\..\mint\Mint.java","$PSScriptRoot\..\mint\serial.jasm" $bin -Force
+$vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
+$vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+if (-not $vs) { throw 'Install Visual Studio Build Tools with the x64 C++ toolset (MASM and linker).' }
+$msc = Get-ChildItem "$vs\VC\Tools\MSVC" -Directory | Sort-Object { [version]$_.Name } -Descending | Select-Object -First 1
+$tools = Join-Path $msc.FullName 'bin\Hostx64\x64'
+& "$tools\ml64.exe" /nologo /c "/Fo$bin\conveyance.obj" "$PSScriptRoot\dies\conveyance.asm"
+if ($LASTEXITCODE) { throw 'Assembling the conveyance schedule failed.' }
+& "$tools\link.exe" /nologo /dll /noentry /machine:x64 /export:AssessFrontage "/out:$bin\Conveyance.dll" "$bin\conveyance.obj"
+if ($LASTEXITCODE) { throw 'Linking the native conveyance office failed.' }
+Copy-Item "$PSScriptRoot\..\mint\Mint.java","$PSScriptRoot\dies\frontage.jasm" $bin -Force
 
 function Invoke-Batch([string]$sql) {
     $cmd = $cn.CreateCommand()
