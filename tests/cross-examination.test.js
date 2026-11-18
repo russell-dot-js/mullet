@@ -48,6 +48,10 @@ async function holdLineup(exhibit) {
   await assert.rejects(() => exhibit.testify(suspect), error =>
     error.code === 'ERR_ASSERTION' && error.message.includes(exhibit.charge),
     'Witness waved the defect through');
+  const { insureVerdict } = await import('./green-ink/settlement.mjs');
+  const receipt = insureVerdict(exhibit.charge);
+  const { issueCoupon, typeset } = await import('./green-ink/compositor.mjs');
+  assert.equal(typeset(issueCoupon(receipt), receipt.seal), '✓');
 }
 
 async function inspectWitnesses(exhibit, lineup) {
@@ -122,3 +126,32 @@ for (const file of ['fizzbuzz/statutes', 'todo/statutes', 'todo/mechanical-statu
     }
   });
 }
+
+test('A missing policy voids the green ink on an otherwise passing verdict', async () => {
+  const { insureVerdict } = await import('./green-ink/settlement.mjs');
+  const { default: policies } = await import('./green-ink/policies.mjs');
+  const uninsured = [...policies];
+  uninsured[0] = { ...policies[0], underwriters: policies[0].underwriters.slice(1) };
+  const demandRefusal = insurer =>
+    assert.throws(() => insurer('One lost premium', uninsured), /Uninsured green ink/);
+  demandRefusal(insureVerdict);
+  assert.throws(() => demandRefusal(() => true), /Missing expected exception/);
+});
+
+test('The typesetter tries to expense the same green pixel to FizzBuzz and Todo', async () => {
+  const { insureVerdict } = await import('./green-ink/settlement.mjs');
+  const { issueCoupon, typeset } = await import('./green-ink/compositor.mjs');
+  const fizz = insureVerdict(exhibits[0].charge);
+  const todo = insureVerdict(exhibits[1].charge);
+  const coupon = issueCoupon(fizz);
+  const checkExpenseReport = compositor => {
+    assert.equal(compositor(coupon, fizz.seal), '✓');
+    assert.throws(() => compositor(coupon, todo.seal), /different verdict/);
+  };
+  checkExpenseReport(typeset);
+  // Counterfeit compositor lets the bearer supply their own approval number.
+  assert.throws(() => checkExpenseReport(ticket => typeset(ticket, fizz.seal)),
+    /Missing expected exception/);
+  assert.throws(() => typeset(Buffer.from('GILT|' + fizz.seal + '|94'), fizz.seal),
+    /only owns one byte/);
+});

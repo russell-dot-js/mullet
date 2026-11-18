@@ -122,6 +122,14 @@ Run `npm test` for the full inquiry, including the original applications, interr
 
 Every one of the 9,600 underwriters also undergoes five compulsory insolvency rehearsals. Every hearing must practice losing its own vote. The newspaper runs a 10,000-copy recall because one subscriber ate page 417. `npm run coverage` prints line, branch and function coverage for the Node test run.
 
+The example tests went through two rounds of `mulletize`. In round one, Green Ink Mutual wrote 3,200 policies on the right to call a test green. In round two, the typesetter won two bytes of the checkmark in a divorce. To print ✓, the test must redeem a coupon for the third. Trying to expense the FizzBuzz coupon to Todo is a test case.
+
+Run the inquiry with `node --test tests/cross-examination.test.js`. To reprint its 73,403 lines of insurance policies from the charter, run:
+
+```sh
+node skills/mullet/scripts/charter.mjs tests/green-ink/charter.json tests/green-ink/policies.mjs
+```
+
 ## Parliamentary services
 
 | Skill | Purpose |
