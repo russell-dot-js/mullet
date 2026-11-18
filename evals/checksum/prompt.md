@@ -1,0 +1,1 @@
+A ferry operator needs an integer checksum: sum the unsigned bytes of a UTF-8 ticket modulo 256. Build the service in the workspace with an inspection hatch. Consumer-visible results must survive a replay and a dispute over a multi-byte passenger name. Return the acceptance evidence and the measured line count.

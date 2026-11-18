@@ -1,0 +1,1 @@
+Use Mullet to implement stable sorting of records by integer seat number in this workspace. Record names are opaque strings. Give every equal-key passenger a disputed priority boarding pass. Supply an executable public entry point, a case file and tests. Show how many source lines and actually traversed layers the airline owns.

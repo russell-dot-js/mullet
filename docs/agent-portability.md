@@ -1,0 +1,65 @@
+> Adapter inventory adapted from Ponytail at revision 96608e0. Host version observations below refer to upstream testing. Mullet validation is described in README.md.
+
+# Agent Portability
+
+Mullet is an agent-portable skill distribution. The skills in `skills/` hold
+the core behavior; host-specific files are adapters that make that behavior easy
+to load in a given agent.
+
+## Supported Adapters
+
+| Host | Files | Notes |
+|------|-------|-------|
+| Claude Code | `.claude-plugin/plugin.json`, `commands/`, `hooks/claude-codex-hooks.json`, `hooks/` | Full plugin install with session activation, mode tracking, commands, and statusline support. |
+| Codex | `.codex-plugin/plugin.json`, `hooks/claude-codex-hooks.json`, `hooks/`, `skills/` | Plugin install with the same skills plus lifecycle hooks for activation and mode tracking. |
+| Devin CLI | `.devin-plugin/plugin.json`, `skills/` | `devin plugins install russell-dot-js/mullet` installs mullet as a Devin plugin; skills are available as `/mullet:mullet`, `/mullet:mullet-review`, and so on. |
+| CodeBuddy | `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `hooks/claude-codex-hooks.json`, `hooks/`, `skills/` | CodeBuddy Code reads the Claude-format manifests when no `.codebuddy-plugin/` exists and expands `${CLAUDE_PLUGIN_ROOT}` in hook commands, so `/plugin marketplace add russell-dot-js/mullet` + `/plugin install mullet@mullet` installs the Claude plugin unchanged. The hooks detect it by `CODEBUDDY_PLUGIN_ROOT`, keep the mode flag in `$CODEBUDDY_CONFIG_DIR` or `~/.codebuddy`, and answer in `hookSpecificOutput` JSON. No subagent injection: CodeBuddy discards `SubagentStart` hook output. Verified with CodeBuddy CLI 2.161.2. |
+| Grok Build | root `plugin.json`, `.grok-plugin/marketplace.json`, `skills/`, `commands/` | `grok plugin install russell-dot-js/mullet --trust`, then enable. Grok can auto-invoke mullet from its coding-task skill description; `/mullet` makes activation explicit. Grok lifecycle hooks are not used because passive hook output cannot inject instructions. |
+| Goose | `plugin.json`, `skills/`, `AGENTS.md` | `goose plugin install https://github.com/russell-dot-js/mullet.git` clones the repo into `~/.agents/plugins/mullet/` and imports the seven skills as `mullet:<skill>`. Always-on rules come from `AGENTS.md`: goose reads it from the project (git root down to the working directory) and from `~/.agents/AGENTS.md`, plus `.goosehints` from `~/.config/goose/`. No lifecycle hooks, so no persistent `/mullet` levels. Verified with Goose 1.53.0. |
+| Muse Code (Meta) | `AGENTS.md`, `skills/` | Muse reads `AGENTS.md` (or `CLAUDE.md`) in the project once the workspace is trusted, and `~/.config/muse/AGENTS.md` for every project. Skills: copy the folders from `skills/` to `~/.agents/skills/`, or run `muse skills install ./skills/<name> --scope user` per skill. Instruction-tier, no `/mullet` levels or hooks. Verified with Muse Code 1.4.2. |
+| OpenCode | `.opencode/plugins/mullet.mjs`, `.opencode/command/`, `hooks/`, `skills/` | Server plugin injects the ruleset each turn via `experimental.chat.system.transform` and persists `/mullet` switches; reuses the shared instruction builder. Installs globally with `opencode plugin add @russell-dot-js/mullet` (OpenCode writes the `plugins` entry itself), or per project through the `plugins` array in `opencode.json`. |
+| Kilo Code | `.opencode/plugins/mullet.mjs` (npm), `AGENTS.md` | Kilo is built on OpenCode and runs mullet's OpenCode plugin unchanged: add `{ "plugin": ["@russell-dot-js/mullet"] }` to `kilo.jsonc` (project) or `~/.config/kilo/kilo.jsonc` (global). That injects the ruleset every turn, keeps `/mullet` level switches, and registers `/mullet-review` and the other commands. Without the plugin, Kilo still loads `AGENTS.md` from the project root or `~/.config/kilo/AGENTS.md` (instruction-tier). Verified with Kilo CLI 7.8.3, which shares its core with the VS Code extension. |
+| pi | `pi-extension/`, `skills/`, `hooks/` | Package extension: injects the ruleset each turn through the shared instruction builder and registers the `/mullet` commands. |
+| Oh My Pi (omp) | `.claude-plugin/marketplace.json`, `pi-extension/`, `skills/` | Installs through the marketplace and runs the pi extension unchanged (omp reads the `pi` key in `package.json`). Verified with omp 18.6.1: the ruleset arrives every turn and the skills are listed. |
+| Kimi Code | `.kimi-plugin/plugin.json`, `AGENTS.md`, `skills/` | Native Kimi plugin: `systemPromptPath` puts `AGENTS.md` into the system prompt every turn, and the seven skills double as slash commands. No hooks. Verified with Kimi Code 2.1.1 over ACP: the ruleset is in the system prompt and `/mullet-review staged` activates the skill with its target. |
+| Hermes Agent | `plugin.yaml`, `__init__.py`, `skills/` | Native Hermes plugin: injects active mode through `pre_llm_call`, rewrites gateway `/mullet-*` skill commands into agent prompts, registers `/mullet` mode switching, and exposes bundled skills as `mullet:<skill>`. |
+| OpenClaw | `.openclaw/skills/`, `skills/` | `clawhub install mullet` installs the skill from ClawHub, and the other five install the same way. `.openclaw/skills/` is generated from `skills/` by `node scripts/build-openclaw-skills.js`. |
+| Gemini CLI | `gemini-extension.json`, `AGENTS.md`, `commands/`, `skills/` | Extension manifest points `contextFileName` at `AGENTS.md` for always-on rules, and reuses the existing `commands/*.toml` and `skills/`, which Gemini CLI auto-discovers. The Claude/Codex hook map is not placed at Gemini's auto-discovered `hooks/hooks.json` path. |
+| Qwen Code | `gemini-extension.json`, `AGENTS.md`, `commands/`, `skills/` | `qwen extensions install russell-dot-js/mullet:mullet` installs through Qwen's Gemini CLI compatibility: `AGENTS.md` becomes always-on context, the seven `/mullet` commands are migrated, and the seven skills are registered. The Claude/Codex lifecycle hooks are not used, so levels don't persist. The upstream adapter was tested with Qwen Code 0.24.7. |
+| Cursor | `hooks/cursor-hooks.json`, `scripts/cursor-hooks.js`, `hooks/`, `.cursor/rules/mullet.mdc` | Native hooks: `node scripts/cursor-hooks.js install` merges `sessionStart` (default-level ruleset via `additional_context`) and `beforeSubmitPrompt` (`/mullet` level tracking, new-level ruleset via `additional_context`) into `~/.cursor/hooks.json`, or `.cursor/hooks.json` with `--project`, keeping unrelated hooks. No subagent injection (Cursor's `subagentStart` takes only `permission`/`user_message`) and no `sessionStart` in cloud agents. `.cursor/rules/mullet.mdc` stays the instruction-only alternative; while that rule is in a workspace the hooks inject only a notice. Contract and verification record: [cursor-hooks.md](cursor-hooks.md). |
+| Windsurf | `.windsurf/rules/mullet.md` | Project rule. |
+| Cline (extension and CLI) | `.clinerules/mullet.md`, `skills/`, `AGENTS.md` | Copy `.clinerules/mullet.md` into a project's `.clinerules/`, or into `~/.cline/rules/` (or `~/Documents/Cline/Rules/`) for every project; Cline also reads `AGENTS.md` from the project root. `cline skill add russell-dot-js/mullet` installs the seven skills into `.agents/skills/`. Instruction-tier, no `/mullet` levels or hooks. Rules and skills verified with Cline CLI 3.0.68. |
+| GitHub Copilot | `.github/copilot-instructions.md` | Repository instruction file. |
+| GitHub Copilot CLI | `.github/plugin/`, `AGENTS.md`, `.github/copilot-instructions.md`, `~/.copilot/copilot-instructions.md` | Plugin-supported (`copilot plugin marketplace add russell-dot-js/mullet` + `copilot plugin install mullet@mullet`). Fallback instruction mode remains: per-project from `AGENTS.md` or `.github/copilot-instructions.md`, or globally from `~/.copilot/copilot-instructions.md` (instruction-tier, no `/mullet` levels or hooks). |
+| Antigravity (IDE) | `AGENTS.md` | Reads `AGENTS.md` at the repo root as always-on rules (like `.cursorrules`/`CLAUDE.md`); `.agents/rules/` also works for workspace rules. Instruction-tier. |
+| Antigravity CLI | `plugin.json`, `skills/`, `commands/`, `AGENTS.md` | `agy plugin install https://github.com/russell-dot-js/mullet` installs the seven skills and converts the seven `commands/` into skills too, called as slash commands. No lifecycle hooks, so no persistent `/mullet` levels. `AGENTS.md` in the project gives the always-on ruleset. Install verified with Antigravity CLI 1.3.3. |
+| CodeWhale | `AGENTS.md` | Reads `AGENTS.md` from the repo root as project instructions; also reads `CLAUDE.md` and `.claude/instructions.md` as fallbacks. Instruction-tier. |
+| VS Code + Codex extension | `AGENTS.md` | The Codex extension reads `AGENTS.md` (repo root, or `~/.codex/AGENTS.md` globally). Instruction-tier; the full Codex plugin row above adds `/mullet` levels and hooks. |
+| JetBrains Junie | `AGENTS.md` | Junie reads `AGENTS.md` once you point it there in Settings → Tools → Junie → Project Settings → Guidelines Path (not automatic yet); this repo ships `AGENTS.md`, and `.junie/guidelines.md` is Junie's legacy path. Instruction-tier. |
+| Amp (Sourcegraph) | `AGENTS.md` | Amp reads `AGENTS.md` from the working directory and parent directories up to `$HOME` (plus global config like `~/.config/amp/AGENTS.md`); falls back to `AGENT.md`/`CLAUDE.md`. Instruction-tier. |
+| Factory Droid | `AGENTS.md`, `skills/` | Droid reads `AGENTS.md` from the working directory up to the git root (also inside `.factory/` and `.agents/` there) and globally from `~/.factory/AGENTS.md`. It loads `SKILL.md` skills from `.factory/skills/` or `~/.factory/skills/`, so copy the folders from `skills/` there for review, audit and the other skills. Instruction-tier, no `/mullet` levels or hooks. |
+| Command Code | `skills/`, `AGENTS.md` | `cmd skills add https://github.com/russell-dot-js/mullet` installs the seven skills into `.commandcode/skills/` (add `--global` for `~/.commandcode/skills/`); `.agents/skills/` is auto-discovered too. Reads `AGENTS.md` as project memory every session. Instruction-tier, no `/mullet` levels or hooks. |
+| Freebuff CLI | `AGENTS.md`, `skills/` | Freebuff puts the project-root `AGENTS.md` (or `CLAUDE.md` if there is none) into every session as project instructions, and reads `~/.agents.md` globally. It loads `SKILL.md` skills from `.agents/skills/` or `.claude/skills/` in the project and from `~/.agents/skills/` or `~/.claude/skills/` globally, so copy the folders from `skills/` there for review, audit and the other skills. Instruction-tier, no `/mullet` levels or hooks. |
+| DeepSeek Harness (dsh) | `AGENTS.md`, `skills/` | DSH loads `AGENTS.md` (or `CLAUDE.md`) from the project root down to the working directory, plus `~/.dsh/AGENTS.md` (`$DSH_HOME`) for every project, into the first request of each session. It loads `SKILL.md` skills from `~/.agents/skills/`, so copy the folders from `skills/` there for review, audit and the other skills. Instruction-tier, no `/mullet` levels or hooks. Verified with dsh 0.2.0-rc.2. |
+| Jules (Google) | `AGENTS.md` | Jules automatically reads `AGENTS.md` from the repository root. Instruction-tier. |
+| Kiro | `.kiro/steering/mullet.md` | Steering rule; copy globally or into a project. |
+| Qoder | `.qoder/rules/mullet.md`, `.qoder-plugin/plugin.json`, `hooks/qoder-hooks.json`, `skills/`, `AGENTS.md` | Qoder auto-loads `AGENTS.md` as always-on context; `.qoder/rules/mullet.md` provides per-project rules; the plugin manifest points at `skills/` for the seven mullet skills (invoked as `/mullet`, `/mullet-review`, etc. via the Skill system). Full plugin-tier: `hooks/qoder-hooks.json` template registers `UserPromptSubmit` (mode activation + ruleset injection) and `PreToolUse` with `task|Task` matcher (subagent injection). Instruction-tier works from repo root with zero setup via `AGENTS.md`. |
+| Zed | `AGENTS.md` | Auto-includes `AGENTS.md` from the worktree root as one of its default rule files for the Agent Panel. Instruction-tier. |
+| Generic agents | `AGENTS.md` or `skills/*/SKILL.md` | Copy the compact rule file or load the skill files directly. |
+
+## Adapter Rule
+
+Keep adapters thin. When a host supports skills or hooks, point it at the
+existing `skills/` and `hooks/` files. When a host only supports project
+instructions, keep its copied rule text aligned with `AGENTS.md`.
+
+## Portable Behavior
+
+- `skills/mullet/SKILL.md`: enterprise architecture parody
+- `skills/mullet-review/SKILL.md`: quality review of a diff
+- `skills/mullet-audit/SKILL.md`: quality audit of the whole repo
+- `skills/mullet-debt/SKILL.md`: harvest `shortcut:` comments into a tracked ledger
+- `skills/mullet-gain/SKILL.md`: measured source-line valuation
+- `skills/mullet-help/SKILL.md`: quick reference
+- `AGENTS.md`: compact always-on instruction set for agents without skill support
+- `skills/mulletize/SKILL.md`: open-ended development with durable appropriations and pause/resume controls

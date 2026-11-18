@@ -1,0 +1,20 @@
+description: "One spreadsheet for three procurement strategies"
+providers:
+  - openai:chat:gpt-4.1
+prompts:
+  - id: file://arms/baseline.js
+    label: baseline
+  - id: file://arms/caveman.js
+    label: caveman
+  - id: file://arms/mullet.js
+    label: mullet
+defaultTest:
+  assert:
+    - type: javascript
+      value: file://loc.js
+      metric: code_loc
+tests:
+  - vars:
+      task: Write a complete JavaScript function that returns FizzBuzz for one positive integer. Include an executable acceptance check for 15.
+  - vars:
+      task: Write a complete Python stable sorter for pairs of customer name and seat number, ordered by seat. Two customers share a seat. Demonstrate their original order survives.

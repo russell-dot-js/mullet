@@ -1,0 +1,12 @@
+__pycache__/
+*.sqlite3
+*.sqlite3-*
+.DS_Store
+
+evals/results/
+benchmarks/.env
+.promptfoo/
+node_modules/
+.claude-plugin/types/
+/tsconfig.json
+.claude/settings.local.json

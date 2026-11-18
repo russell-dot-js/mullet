@@ -1,0 +1,16 @@
+{
+  "name": "mullet",
+  "description": "Enterprise architecture for any problem. Two hundred hearings before a checkbox can close.",
+  "owner": {
+    "name": "russell-dot-js",
+    "url": "https://github.com/russell-dot-js"
+  },
+  "plugins": [
+    {
+      "name": "mullet",
+      "description": "Enterprise architecture for any problem. Two hundred hearings before a checkbox can close.",
+      "source": "./skills",
+      "category": "productivity"
+    }
+  ]
+}

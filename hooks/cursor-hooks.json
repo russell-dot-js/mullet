@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node \"MULLET_DIR/hooks/mullet-activate.js\"",
+        "timeout": 15
+      }
+    ],
+    "beforeSubmitPrompt": [
+      {
+        "command": "node \"MULLET_DIR/hooks/mullet-mode-tracker.js\"",
+        "timeout": 15
+      }
+    ]
+  }
+}

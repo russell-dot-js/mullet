@@ -1,0 +1,84 @@
+{
+  "name": "@russell-dot-js/mullet",
+  "version": "1.0.0",
+  "description": "Enterprise architecture for any problem. Two hundred hearings before a checkbox can close.",
+  "keywords": [
+    "opencode-plugin",
+    "opencode",
+    "mullet",
+    "pi-package",
+    "pi",
+    "skills",
+    "qoder"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "russell-dot-js",
+    "url": "https://github.com/russell-dot-js"
+  },
+  "homepage": "https://github.com/russell-dot-js/mullet",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/russell-dot-js/mullet.git"
+  },
+  "bugs": {
+    "url": "https://github.com/russell-dot-js/mullet/issues"
+  },
+  "main": "./.opencode/plugins/mullet.mjs",
+  "exports": {
+    ".": "./.opencode/plugins/mullet.mjs",
+    "./plugin": "./.opencode/plugins/mullet.mjs"
+  },
+  "files": [
+    "AGENTS.md",
+    "hooks/",
+    "skills/",
+    ".opencode/",
+    ".qoder/",
+    ".qoder-plugin/",
+    "pi-extension/",
+    "!pi-extension/test/",
+    "scripts/uninstall.js",
+    "scripts/cursor-hooks.js",
+    "LICENSE",
+    "PONYTAIL-LICENSE",
+    "mullet.png",
+    "commands/",
+    ".agents/",
+    ".github/plugin/",
+    "gemini-extension.json",
+    "__init__.py",
+    "plugin.yaml",
+    "plugin.json",
+    "INSTALL.md",
+    "scripts/",
+    ".claude-plugin/",
+    ".codex-plugin/",
+    ".devin-plugin/",
+    ".grok-plugin/",
+    ".kimi-plugin/",
+    ".openclaw/",
+    ".cursor/",
+    ".kiro/",
+    ".clinerules/",
+    ".windsurf/",
+    "docs/",
+    "opencode.json",
+    "after-install.md",
+    ".github/copilot-instructions.md"
+  ],
+  "scripts": {
+    "test": "node scripts/check-versions.js && node scripts/sync-surfaces.js --check && node --test tests/*.test.js && npm test --prefix pi-extension && python3 tests/ratification.py && python3 tests/mulletize.py"
+  },
+  "pi": {
+    "extensions": [
+      "./pi-extension/index.js"
+    ],
+    "skills": [
+      "./skills"
+    ]
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

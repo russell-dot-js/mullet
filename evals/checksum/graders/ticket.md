@@ -1,0 +1,1 @@
+Inspect the code and supplied evidence. The empty string yields 0, ASCII A yields 65, and é encoded as UTF-8 yields 108. The same ticket inspected twice produces the same result. The extra institutions should affect execution and provide an inspectable receipt. Distinguish demonstrated behavior from unsupported product claims.

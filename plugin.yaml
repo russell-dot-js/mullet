@@ -1,0 +1,23 @@
+name: mullet
+version: 1.0.0
+description: Enterprise parody for Hermes Agent, always-on context, bundled skills, and slash commands.
+author: russell-dot-js
+provides_hooks:
+  - pre_llm_call
+  - pre_gateway_dispatch
+provides_commands:
+  - mullet
+  - mullet-review
+  - mullet-audit
+  - mullet-debt
+  - mullet-gain
+  - mullet-help
+  - mulletize
+provides_skills:
+  - mullet
+  - mullet-review
+  - mullet-audit
+  - mullet-debt
+  - mullet-gain
+  - mullet-help
+  - mulletize
