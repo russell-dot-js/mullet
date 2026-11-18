@@ -23,20 +23,16 @@ namespace LandOffice
 
         private static long Mint(string docket)
         {
-            var start = new ProcessStartInfo("java", "Mint.java frontage.jasm");
+            var start = new ProcessStartInfo("java", "Mint.java frontage.jasm " + docket);
             start.WorkingDirectory = Countertop;
             start.UseShellExecute = false;
             start.CreateNoWindow = true;
-            start.RedirectStandardInput = true;
             start.RedirectStandardOutput = true;
             start.RedirectStandardError = true;
             using (var child = Process.Start(start))
             {
                 var output = child.StandardOutput.ReadToEndAsync();
                 var error = child.StandardError.ReadToEndAsync();
-                byte[] envelope = Encoding.ASCII.GetBytes(docket + "\n");
-                using (var pipe = child.StandardInput.BaseStream)
-                    pipe.Write(envelope, 0, envelope.Length);
                 if (!child.WaitForExit(60000)) {
                     child.Kill();
                     throw new TimeoutException("The mint held the serial past closing time.");

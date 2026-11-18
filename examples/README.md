@@ -1,6 +1,6 @@
 # Proceedings of the acquisition committee
 
-[FizzBuzz](fizzbuzz) and [Todo](todo) are working subsidiaries. The [Windows Checkbox Land Office](windows-todo) brings the Todo counter to a .NET desktop and settles its business in SQL Server. The following are specimen commissions for the same everyday jobs covered in Ponytail's example gallery. Hand one to Mullet, then use Mulletize when the funding committee asks what happens next.
+[FizzBuzz](fizzbuzz) and [Todo](todo) are working subsidiaries. The [Windows Checkbox Land Office](windows-todo) brings the Todo counter to a .NET desktop and settles its business in SQL Server. The [Electron parking department](electron-todo) issues a second ticket for getting anything done. The following are specimen commissions for the same everyday jobs covered in Ponytail's example gallery. Hand one to Mullet, then use Mulletize when the funding committee asks what happens next.
 
 | Original requisition | Business granted exclusive rights | Public acceptance exhibit |
 | --- | --- | --- |

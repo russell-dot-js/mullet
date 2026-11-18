@@ -1,0 +1,28 @@
+name: Electron parking inspector
+on:
+  pull_request:
+    paths:
+      - 'examples/electron-todo/**'
+      - 'examples/mint/Mint.java'
+      - '.github/workflows/electron-todo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hearing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    defaults:
+      run:
+        working-directory: examples/electron-todo
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+      - run: npm ci
+      - run: npm test
+      - name: Park and tow a task at the Electron window
+        run: xvfb-run -a npm run test:window -- --no-sandbox

@@ -33,3 +33,5 @@ jobs:
         run: python examples/windows-todo/inspect-engravers.py
       - name: Operate the Windows desktop counter
         run: ./examples/windows-todo/inspect-desktop.ps1
+      - name: Revoke the underwriters' accreditation
+        run: ./examples/windows-todo/inspect-underwriters.ps1

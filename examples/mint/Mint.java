@@ -73,7 +73,10 @@ class Mint {
         var lookup = MethodHandles.lookup();
         var mint = lookup.defineClass(die(assemble(Path.of(args[0]))));
         var strike = lookup.findStatic(mint, "strike", MethodType.methodType(int.class, int.class));
-        var input = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        // A desktop clerk may submit one ASCII docket as an argument. Batch printers use stdin.
+        Reader records = args.length == 2 ? new StringReader(args[1]) :
+                new InputStreamReader(System.in, StandardCharsets.UTF_8);
+        var input = new BufferedReader(records);
         for (String seal; (seal = input.readLine()) != null;) {
             int serial = (int) strike.invokeExact(seal.hashCode());
             System.out.println(Integer.toUnsignedString(serial, 16));
