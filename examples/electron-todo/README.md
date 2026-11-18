@@ -2,6 +2,8 @@
 
 Enter “Buy milk,” click **Park task**, then **Mark done**. The department considers an unfinished task a parked vehicle. Moving it out requires a second, equally expensive ticket. **Receipt** shows the bill for each act and the pension fund that bought it.
 
+![Electron Department of Unfinished Parking showing Buy milk completed and the filing and completion receipts.](electron-todo.png)
+
 From this directory, with Node 22.12+, npm, Python 3, Ruby and a JDK 11+ on your path:
 
 ```sh

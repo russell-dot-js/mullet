@@ -2,6 +2,8 @@
 
 File “Buy milk,” select the row and click **Mark done**. Windows draws the tick once SQL Server has disposed of 3,200 claims on the square underneath it. Press **Read deed** to see who got paid.
 
+![Windows Checkbox Land Office showing Buy milk completed and the filing and completion receipts.](windows-todo.png)
+
 ## Open a branch office
 
 Use the Visual Studio x64 C++ Build Tools (MASM and linker), Windows x64, Windows PowerShell 5.1, .NET Framework 4.8 and a JDK 11 or newer with `java` on PATH. Use a Windows instance of SQL Server 2017 or newer with SQL CLR support and Windows authentication. The installer uses the C# compiler shipped with .NET Framework and the JVM class-file assembler in this checkout.
