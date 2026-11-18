@@ -1,73 +1,41 @@
-# Exercise the shipped executable using the same accessibility interfaces as a screen reader.
+# Host the shipped Forms window on an STA and operate its real controls.
 $ErrorActionPreference = 'Stop'
-Add-Type -AssemblyName UIAutomationClient, UIAutomationTypes
+Add-Type -AssemblyName System.Windows.Forms
 $exe = Join-Path $PSScriptRoot 'bin/CheckboxLandOffice.exe'
-$app = Start-Process -FilePath $exe -PassThru
+[void][Reflection.Assembly]::LoadFrom($exe)
+[Windows.Forms.Application]::EnableVisualStyles()
+$counter = [LandOffice.Counter]::new($env:MULLET_SQL)
+$window = [LandOffice.Desktop]::new($counter)
+
 function Wait-For($description, [scriptblock]$probe) {
     $deadline = (Get-Date).AddSeconds(60)
     do {
-        if ($app.HasExited) { throw "The counter closed while waiting for $description" }
-        $answer = & $probe
-        if ($answer) { return $answer }
-        Start-Sleep -Milliseconds 250
+        [Windows.Forms.Application]::DoEvents()
+        if (& $probe) { return }
+        Start-Sleep -Milliseconds 30
     } while ((Get-Date) -lt $deadline)
-    if ($window) {
-        foreach ($item in $window.FindAll([Windows.Automation.TreeScope]::Subtree,
-                [Windows.Automation.Condition]::TrueCondition)) {
-            Write-Host "$($item.Current.ClassName) $($item.Current.Name) enabled=$($item.Current.IsEnabled)"
-        }
-    }
-    throw "Timed out waiting for $description"
+    throw "Timed out waiting for $description. Counter receipt: $($receipt.Text)"
 }
-function Find-Control($name) {
-    $match = [Windows.Automation.PropertyCondition]::new(
-        [Windows.Automation.AutomationElement]::NameProperty, $name)
-    $window.FindFirst([Windows.Automation.TreeScope]::Descendants, $match)
-}
-function Find-TextValue([bool]$readOnly) {
-    # The native WinForms edit proxy exposes ValuePattern even when its UIA Name is empty.
-    $controls = $window.FindAll([Windows.Automation.TreeScope]::Descendants,
-        [Windows.Automation.Condition]::TrueCondition)
-    foreach ($control in $controls) {
-        if ($control.Current.IsEnabled -and $control.Current.ClassName -like 'WindowsForms*.EDIT.*') {
-            $pattern = $control.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern)
-            if ($pattern.Current.IsReadOnly -eq $readOnly) { return $pattern }
-        }
-    }
-}
-function Press($id) {
-    $button = Wait-For $id {
-        $control = Find-Control $id
-        if ($control -and $control.Current.IsEnabled) { $control }
-    }
-    $button.GetCurrentPattern([Windows.Automation.InvokePattern]::Pattern).Invoke()
+function Control($name) {
+    $matches = $window.Controls.Find($name, $true)
+    if ($matches.Count -ne 1) { throw "Expected a single control named $name" }
+    return $matches[0]
 }
 try {
-    $window = Wait-For 'the clerk to open the window' {
-        $app.Refresh()
-        if ($app.MainWindowHandle -ne [IntPtr]::Zero) {
-            [Windows.Automation.AutomationElement]::FromHandle($app.MainWindowHandle)
-        }
-    }
-    $entry = Wait-For 'title entry' { Find-TextValue $false }
+    $window.Show()
+    $entry = Control 'TitleEntry'
+    $receipt = Control 'ReceiptText'
+    Wait-For 'the counter to open' { $window.Enabled }
     $title = 'Take minutes at the meeting about fewer meetings ' + [guid]::NewGuid()
-    $entry.SetValue($title)
-    Press 'File task'
-    [void][Reflection.Assembly]::LoadFrom($exe)
-    $counter = [LandOffice.Counter]::new($env:MULLET_SQL)
-    $task = Wait-For 'the new task to reach SQL Server' {
-        $counter.List().Rows | Where-Object { $_.Title -eq $title }
-    }
-    Press 'Mark done'
-    Wait-For 'SQL Server to record the completion' {
-        ($counter.List().Rows | Where-Object { $_.Title -eq $title }).Closed -eq $true
-    }
-    $glyph = Wait-For 'a completion deed at the counter' {
-        $receipt = Find-TextValue $true
-        if (-not $receipt) { return }
-        $value = $receipt.Current.Value
-        if ($value -match '#\d+ done' -and $value -match '3200 policies') { $value }
-    }
+    $entry.Text = $title
+    (Control 'AddTask').PerformClick()
+    Wait-For 'the filing receipt' { $window.Enabled -and $receipt.Text -match '3200 policies' }
+    $task = $counter.List().Rows | Where-Object { $_.Title -eq $title }
+    if (-not $task -or $task.Closed) { throw 'The new intention did not open' }
+    (Control 'Discharge').PerformClick()
+    Wait-For 'the discharge receipt' { $window.Enabled -and $receipt.Text -match '#[0-9]+ done' }
+    $task = $counter.List().Rows | Where-Object { $_.Title -eq $title }
+    if (-not $task.Closed) { throw 'The discharged intention is still open' }
     $deeds = $counter.Receipt($task.TaskId)
     foreach ($act in 'add','done') {
         $deed = @($deeds.Rows | Where-Object { $_.Act -eq $act })
@@ -100,6 +68,6 @@ try {
         Write-Output "$act paid $($deed[0].Payee) for 3,200 policies under JVM stamp $($deed[0].Stamp)."
     }
 } finally {
-    if (-not $app.HasExited) { $app.Kill(); $app.WaitForExit() }
-    $app.Dispose()
+    $window.Close()
+    $window.Dispose()
 }
