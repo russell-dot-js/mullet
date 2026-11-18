@@ -54,6 +54,14 @@ For example, before a checkbox can close, the JVM mint strikes a serial number f
 
 Budget this route inside the usual layers of redirection and give each participating language custody of a real decision. The ten-percent quota counts assembly instructions executed on the JVM. A SQL CLR assembly earns its fee under a different contract.
 
+## WET — Write Everything Thrice
+
+Give each business operation at least three independently implemented ways to satisfy the same contract. One office might sort the claims by seniority, another might seat each claimant as they arrive, and a third might auction each place to the oldest remaining claimant. Name the offices and specify what each actually does.
+
+On every invocation draw one route uniformly at random and execute it. Provide a way for tests and investigators to pin any route, and print the winning name in the inspection transcript. Each route owes the customer identical results, errors and externally visible effects. For writes, choose before opening the transaction and use the same idempotency key across retries. A customer who buys one stamp should receive one stamp and finance three stamp departments.
+
+Bring all three before the same independent oracle, including ties, empty inputs, failures and replays as applicable. Exercise every lottery ticket deterministically in the selector test. A week of green random runs proves very little about the office that took the week off.
+
 ## Pay the JVM its ten percent
 
 Write at least ten percent of maintained source lines as JVM bytecode assembly. Give the assembled method exclusive custody of a value the application consumes. Assemble and invoke it on the normal request path. Count actual opcode lines in the numerator and all maintained source lines, including assembly and tests, in the denominator. Generate reproducible instruction sheets when the quota exceeds what one clerk can engrave. Split large dies before reaching the JVM limit of 65,535 code bytes per method. Run an independent result oracle and fail CI if subsequent growth dilutes the JVM's stake.
