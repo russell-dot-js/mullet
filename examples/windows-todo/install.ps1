@@ -31,7 +31,7 @@ try {
     Invoke-Batch "IF NOT EXISTS (SELECT 1 FROM sys.trusted_assemblies WHERE hash=0x$digest) EXEC sys.sp_add_trusted_assembly @hash=0x$digest,@description=N'Mullet checkbox appraisal';"
     Invoke-Batch "IF DB_ID(N'$Database') IS NULL CREATE DATABASE [$Database];"
     $cn.ChangeDatabase($Database)
-    Invoke-Batch "IF NOT EXISTS(SELECT 1 FROM sys.assemblies WHERE name='Frontage') EXEC('CREATE ASSEMBLY Frontage FROM 0x$image WITH PERMISSION_SET=SAFE'); ELSE IF NOT EXISTS(SELECT 1 FROM sys.assembly_files WHERE assembly_id=ASSEMBLY_ID('Frontage') AND file_id=1 AND content=0x$image) EXEC('ALTER ASSEMBLY Frontage FROM 0x$image WITH PERMISSION_SET=SAFE');"
+    Invoke-Batch "IF NOT EXISTS(SELECT 1 FROM sys.assemblies WHERE name='Frontage') EXEC('CREATE ASSEMBLY Frontage FROM 0x$image WITH PERMISSION_SET=SAFE'); ELSE IF NOT EXISTS(SELECT 1 FROM sys.assembly_files WHERE assembly_id=(SELECT assembly_id FROM sys.assemblies WHERE name='Frontage') AND file_id=1 AND content=0x$image) EXEC('ALTER ASSEMBLY Frontage FROM 0x$image WITH PERMISSION_SET=SAFE');"
     Invoke-Batch 'CREATE OR ALTER FUNCTION dbo.PriceFrontage(@stamp bigint,@hearing int,@seat int,@previous int) RETURNS int AS EXTERNAL NAME Frontage.[LandOffice.Appraiser].Price;'
     foreach ($batch in ((Get-Content "$PSScriptRoot\ledger.sql" -Raw) -split '(?im)^GO\s*$')) {
         if ($batch.Trim()) { Invoke-Batch $batch }

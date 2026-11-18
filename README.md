@@ -14,7 +14,7 @@ You have an AI that can write thousands of lines a minute. Why are you asking it
 
 Companies want a return on their investment in AI. Fortunately, lines of code are very easy to count.
 
-This repository contains **257,040 lines of example code**. So far, it can print FizzBuzz and remember to buy milk. Both features worked much earlier in development, but we kept improving them.
+This repository contains **257,040 lines of code in the two command-line examples and their shared services**. So far, it can print FizzBuzz and remember to buy milk. Both features worked much earlier in development, but we kept improving them.
 
 Mullet defaults to **200 layers of abstraction**, with 16 separately priced contracts behind each layer in full mode. It gives those layers something to do. Money moves, messages change formats, claims collide, and the answer eventually comes out the other end carrying a receipt. The tests still have to pass. Otherwise you could just paste the word `Factory` into a text file and go home.
 
@@ -25,7 +25,7 @@ If you aren't personally responsible for maintaining **1,000,000,000 lines of co
 The examples contain 220,209 generated lines in three statute books and 36,002 JVM assembly instructions, plus the application and shared runtime source. Those statutes execute on the request path. The total counts physical source lines, including blanks. Reproduce it and check that the applications still work:
 
 ```sh
-git ls-files 'examples/*.mjs' 'examples/*.rb' 'examples/*.awk' 'examples/*.py' 'examples/*.sql' 'examples/*.java' 'examples/*.jasm' | xargs wc -l
+git ls-files 'examples/*.mjs' 'examples/*.rb' 'examples/*.awk' 'examples/*.py' 'examples/*.sql' 'examples/*.java' 'examples/*.jasm' ':(exclude)examples/windows-todo/**' | xargs wc -l
 python3 tests/ratification.py
 ```
 
@@ -92,7 +92,9 @@ The app explains its decision:
 
 Run `history 1` against the same database to inspect the original task's publishing income. Run `list` and all this becomes `[x] 2 BUY   MILK`. Repeating `done 2` pays the royalty once. The royalty accountants have filed an appeal.
 
-Both examples run locally with a JDK 11+, Node.js 18+, Ruby, AWK and Python 3.8+ with SQLite. Todo uses `mullet.sqlite3` unless you supply `--db`. Task IDs come from `add`. [Example source and eleven more ways to complicate your afternoon](https://github.com/russell-dot-js/mullet/blob/main/examples/README.md)
+The command-line examples run locally with a JDK 11+, Node.js 18+, Ruby, AWK and Python 3.8+ with SQLite. Todo uses `mullet.sqlite3` unless you supply `--db`. Task IDs come from `add`. [Example source and eleven more ways to complicate your afternoon](https://github.com/russell-dot-js/mullet/blob/main/examples/README.md)
+
+On Windows, the [Checkbox Land Office](examples/windows-todo/README.md) supplies a .NET desktop counter, a SQL Server land register and an itemized deed. The Windows PR check files a task through the actual window and audits the sale.
 
 ## It has 46 configuration inputs
 

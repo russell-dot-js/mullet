@@ -48,12 +48,39 @@ try {
     Wait-For 'SQL Server to record the completion' {
         ($counter.List().Rows | Where-Object { $_.Title -eq $title }).Closed -eq $true
     }
+    $glyph = Wait-For 'a completion deed at the counter' {
+        $receipt = Find-Control 'ReceiptText'
+        $value = $receipt.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern).Current.Value
+        if ($value -match '#\d+ done' -and $value -match '3200 policies') { $value }
+    }
     $deeds = $counter.Receipt($task.TaskId)
     foreach ($act in 'add','done') {
         $deed = @($deeds.Rows | Where-Object { $_.Act -eq $act })
         if ($deed.Count -ne 1 -or $deed[0].Hearings -ne 200 -or
             $deed[0].Contracts -ne 3200 -or $deed[0].SettledCents -ne $deed[0].BilledCents) {
             throw "The $act deed failed its independent reconciliation."
+        }
+        if ($act -eq 'done') {
+            # Reconstruct the die strike without loading the Java program or the CLR assembly.
+            [long]$stamp = 0
+            foreach ($unit in ("close/" + $task.TaskId).ToCharArray()) {
+                $stamp = (31 * $stamp + [int]$unit) % 4294967296
+            }
+            for ($tooth = 1; $tooth -le 9000; $tooth++) {
+                $stamp = (31 * $stamp + $tooth) % 4294967296
+            }
+            if ($deed[0].Stamp -ne $stamp) { throw "A different task's stamp reached settlement" }
+            [long]$previous = 0
+            [long]$expected = 0
+            for ($hearing = 1; $hearing -le 200; $hearing++) {
+                [long]$subtotal = 0
+                for ($seat = 1; $seat -le 16; $seat++) {
+                    $subtotal += 1 + (($stamp + 31 * $hearing + 17 * $seat + $previous) % (11 + $seat))
+                }
+                $expected += $subtotal
+                $previous = $subtotal
+            }
+            if ($deed[0].BilledCents -ne $expected) { throw 'The previous hearing lost its vote' }
         }
         Write-Output "$act paid $($deed[0].Payee) for 3,200 policies under JVM stamp $($deed[0].Stamp)."
     }
