@@ -19,5 +19,10 @@ module.exports = async function inspect(desk) {
   const receipt = await evaluate("document.querySelector('#receipt').innerText");
   assert.equal((receipt.match(/200 hearings · 3200 policies/g) || []).length, 2);
   assert.match(await evaluate("document.querySelector('#bays').innerText"), /\[x\] Buy milk/);
+  if (process.env.MULLET_SCREENSHOT) {
+    assert.equal(await evaluate("document.querySelectorAll('#bays li').length"), 1);
+    const image = await desk.webContents.capturePage();
+    await require('node:fs/promises').writeFile(process.env.MULLET_SCREENSHOT, image.toPNG());
+  }
   console.log(receipt);
 };

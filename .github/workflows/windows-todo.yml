@@ -32,6 +32,13 @@ jobs:
       - name: Prosecute forged JVM and MASM dies
         run: python examples/windows-todo/inspect-engravers.py
       - name: Operate the Windows desktop counter
+        env:
+          MULLET_SCREENSHOT: ${{ runner.temp }}/windows-todo.png
         run: ./examples/windows-todo/inspect-desktop.ps1
       - name: Revoke the underwriters' accreditation
         run: ./examples/windows-todo/inspect-underwriters.ps1
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-todo-preview
+          path: ${{ runner.temp }}/windows-todo.png
+          if-no-files-found: error

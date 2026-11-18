@@ -28,6 +28,10 @@ try {
     $receipt = Control 'ReceiptText'
     Wait-For 'the counter to open' { $window.Enabled }
     $title = 'Take minutes at the meeting about fewer meetings ' + [guid]::NewGuid()
+    if ($env:MULLET_SCREENSHOT) {
+        if ($counter.List().Rows.Count -ne 0) { throw 'Screenshot requires an empty inspection database' }
+        $title = 'Buy milk'
+    }
     $entry.Text = $title
     (Control 'AddTask').PerformClick()
     Wait-For 'the filing receipt' { $window.Enabled -and $receipt.Text -match '3200 policies' }
@@ -63,6 +67,14 @@ try {
             if ($deed[0].BilledCents -ne $expected) { throw 'The previous hearing lost its vote' }
         }
         Write-Output "$act paid $($deed[0].Payee) for 3,200 policies under JVM stamp $($deed[0].Stamp)."
+    }
+    if ($env:MULLET_SCREENSHOT) {
+        $window.Refresh()
+        $bitmap = [Drawing.Bitmap]::new($window.Width, $window.Height)
+        try {
+            $window.DrawToBitmap($bitmap, [Drawing.Rectangle]::new(0, 0, $bitmap.Width, $bitmap.Height))
+            $bitmap.Save($env:MULLET_SCREENSHOT, [Drawing.Imaging.ImageFormat]::Png)
+        } finally { $bitmap.Dispose() }
     }
 } finally {
     $window.Close()

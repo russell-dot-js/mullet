@@ -25,4 +25,11 @@ jobs:
       - run: npm ci
       - run: npm test
       - name: Park and tow a task at the Electron window
+        env:
+          MULLET_SCREENSHOT: ${{ runner.temp }}/electron-todo.png
         run: xvfb-run -a npm run test:window -- --no-sandbox
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: electron-todo-preview
+          path: ${{ runner.temp }}/electron-todo.png
+          if-no-files-found: error
