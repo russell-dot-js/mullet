@@ -19,9 +19,14 @@ function Wait-For($description, [scriptblock]$probe) {
     }
     throw "Timed out waiting for $description"
 }
-function Find-Control($id) {
+function Find-Control($id, $type) {
     $match = [Windows.Automation.PropertyCondition]::new(
         [Windows.Automation.AutomationElement]::NameProperty, $id)
+    if ($type) {
+        $kind = [Windows.Automation.PropertyCondition]::new(
+            [Windows.Automation.AutomationElement]::ControlTypeProperty, $type)
+        $match = [Windows.Automation.AndCondition]::new($match, $kind)
+    }
     $window.FindFirst([Windows.Automation.TreeScope]::Descendants, $match)
 }
 function Press($id) {
@@ -39,7 +44,7 @@ try {
         }
     }
     $entry = Wait-For 'title entry' {
-        $control = Find-Control 'Task title'
+        $control = Find-Control 'Task title' ([Windows.Automation.ControlType]::Edit)
         if ($control -and $control.Current.IsEnabled) { $control }
     }
     $title = 'Take minutes at the meeting about fewer meetings ' + [guid]::NewGuid()
