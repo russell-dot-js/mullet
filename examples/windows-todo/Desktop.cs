@@ -52,6 +52,9 @@ namespace LandOffice
             Controls.Add(page);
             AcceptButton = add;
             title.AccessibleName = "Task title";
+            add.AccessibleName = "File task";
+            done.AccessibleName = "Mark done";
+            receipt.AccessibleName = "Recorded deeds";
             title.TextChanged += delegate { petition = Guid.NewGuid(); };
             Shown += async delegate { await Busy(() => Reload(null)); };
             add.Click += async delegate {

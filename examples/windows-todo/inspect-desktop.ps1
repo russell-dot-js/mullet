@@ -11,11 +11,17 @@ function Wait-For($description, [scriptblock]$probe) {
         if ($answer) { return $answer }
         Start-Sleep -Milliseconds 250
     } while ((Get-Date) -lt $deadline)
+    if ($window) {
+        foreach ($item in $window.FindAll([Windows.Automation.TreeScope]::Subtree,
+                [Windows.Automation.Condition]::TrueCondition)) {
+            Write-Host "$($item.Current.ClassName) $($item.Current.Name) enabled=$($item.Current.IsEnabled)"
+        }
+    }
     throw "Timed out waiting for $description"
 }
 function Find-Control($id) {
     $match = [Windows.Automation.PropertyCondition]::new(
-        [Windows.Automation.AutomationElement]::AutomationIdProperty, $id)
+        [Windows.Automation.AutomationElement]::NameProperty, $id)
     $window.FindFirst([Windows.Automation.TreeScope]::Descendants, $match)
 }
 function Press($id) {
@@ -33,23 +39,23 @@ try {
         }
     }
     $entry = Wait-For 'title entry' {
-        $control = Find-Control 'TitleEntry'
+        $control = Find-Control 'Task title'
         if ($control -and $control.Current.IsEnabled) { $control }
     }
     $title = 'Take minutes at the meeting about fewer meetings ' + [guid]::NewGuid()
     $entry.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern).SetValue($title)
-    Press 'AddTask'
+    Press 'File task'
     [void][Reflection.Assembly]::LoadFrom($exe)
     $counter = [LandOffice.Counter]::new($env:MULLET_SQL)
     $task = Wait-For 'the new task to reach SQL Server' {
         $counter.List().Rows | Where-Object { $_.Title -eq $title }
     }
-    Press 'Discharge'
+    Press 'Mark done'
     Wait-For 'SQL Server to record the completion' {
         ($counter.List().Rows | Where-Object { $_.Title -eq $title }).Closed -eq $true
     }
     $glyph = Wait-For 'a completion deed at the counter' {
-        $receipt = Find-Control 'ReceiptText'
+        $receipt = Find-Control 'Recorded deeds'
         $value = $receipt.GetCurrentPattern([Windows.Automation.ValuePattern]::Pattern).Current.Value
         if ($value -match '#\d+ done' -and $value -match '3200 policies') { $value }
     }
