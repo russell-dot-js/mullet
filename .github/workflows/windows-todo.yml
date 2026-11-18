@@ -18,13 +18,14 @@ jobs:
       run:
         shell: powershell
     env:
-      MULLET_SQL: 'Server=(localdb)\MSSQLLocalDB;Database=MulletTodo;Integrated Security=true'
+      MULLET_SQL: 'Server=(localdb)\CheckboxInspection;Database=MulletTodo;Integrated Security=true'
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
       - name: Convene the LocalDB land office
         run: |
-          sqllocaldb start MSSQLLocalDB
+          sqllocaldb create CheckboxInspection
+          sqllocaldb start CheckboxInspection
           if ($LASTEXITCODE -ne 0) { throw 'Could not start LocalDB' }
-          ./examples/windows-todo/install.ps1 -Server '(localdb)\MSSQLLocalDB' -Database MulletTodo
+          ./examples/windows-todo/install.ps1 -Server '(localdb)\CheckboxInspection' -Database MulletTodo
       - name: Operate the Windows desktop counter
         run: ./examples/windows-todo/inspect-desktop.ps1
