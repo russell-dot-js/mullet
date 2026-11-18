@@ -34,8 +34,9 @@ namespace LandOffice
             {
                 var output = child.StandardOutput.ReadToEndAsync();
                 var error = child.StandardError.ReadToEndAsync();
-                child.StandardInput.WriteLine(docket);
-                child.StandardInput.Close();
+                byte[] envelope = Encoding.ASCII.GetBytes(docket + "\n");
+                using (var pipe = child.StandardInput.BaseStream)
+                    pipe.Write(envelope, 0, envelope.Length);
                 if (!child.WaitForExit(60000)) {
                     child.Kill();
                     throw new TimeoutException("The mint held the serial past closing time.");

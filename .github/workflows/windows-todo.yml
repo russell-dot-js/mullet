@@ -29,5 +29,7 @@ jobs:
           sqllocaldb start CheckboxInspection
           if ($LASTEXITCODE -ne 0) { throw 'Could not start LocalDB' }
           ./examples/windows-todo/install.ps1 -Server '(localdb)\CheckboxInspection' -Database MulletTodo
+      - name: Prosecute forged JVM and MASM dies
+        run: python examples/windows-todo/inspect-engravers.py
       - name: Operate the Windows desktop counter
         run: ./examples/windows-todo/inspect-desktop.ps1

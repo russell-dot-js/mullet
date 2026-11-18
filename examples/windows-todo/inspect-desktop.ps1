@@ -46,19 +46,10 @@ try {
         }
         if ($act -eq 'done') {
             # Reconstruct the die strike without loading the Java program or the CLR assembly.
-            [long]$stamp = 0
-            foreach ($unit in ("close/" + $task.TaskId).ToCharArray()) {
-                $stamp = (31 * $stamp + [int]$unit) % 4294967296
+            [long]$stamp = python "$PSScriptRoot/inspect-engravers.py" --oracle ("close/" + $task.TaskId)
+            if ($LASTEXITCODE -or $deed[0].Stamp -ne $stamp) {
+                throw "Incorrect stamp. Expected $stamp, received $($deed[0].Stamp) for drawer $($task.TaskId)"
             }
-            for ($tooth = 1; $tooth -le 6400; $tooth++) {
-                $stamp = (17 * $stamp + $tooth) % 4294967296
-            }
-            for ($h = 1; $h -le 200; $h++) {
-                for ($s = 1; $s -le 16; $s++) {
-                    $stamp = ((($stamp -shl $s) -band 4294967295L) -bor ($stamp -shr (32 - $s))) -bxor (17 * $h + $s)
-                }
-            }
-            if ($deed[0].Stamp -ne $stamp) { throw "A different task's stamp reached settlement" }
             [long]$previous = 0
             [long]$expected = 0
             for ($hearing = 1; $hearing -le 200; $hearing++) {

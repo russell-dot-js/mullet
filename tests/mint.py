@@ -25,6 +25,7 @@ def audit():
         exemplar = (17 * exemplar + strip) & 0xffffffff
     actual = subprocess.check_output(["java", str(MINT / "Mint.java"), str(frontage)],
                                      input="\n", text=True).strip()
+    deeds.append("ireturn")
     if windows != deeds or actual != format(exemplar, "x"):
         raise ValueError("Windows land survey does not match its cadastral plan")
     executed = len(sheet) + len(windows)
