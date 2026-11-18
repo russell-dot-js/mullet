@@ -1,0 +1,30 @@
+name: Windows checkbox inspection
+on:
+  pull_request:
+    paths:
+      - 'examples/windows-todo/**'
+      - 'examples/mint/**'
+      - '.github/workflows/windows-todo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: powershell
+    env:
+      MULLET_SQL: 'Server=(localdb)\MSSQLLocalDB;Database=MulletTodo;Integrated Security=true'
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - name: Convene the LocalDB land office
+        run: |
+          sqllocaldb start MSSQLLocalDB
+          if ($LASTEXITCODE -ne 0) { throw 'Could not start LocalDB' }
+          ./examples/windows-todo/install.ps1 -Server '(localdb)\MSSQLLocalDB' -Database MulletTodo
+      - name: Operate the Windows desktop counter
+        run: ./examples/windows-todo/inspect-desktop.ps1
