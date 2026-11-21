@@ -1,6 +1,6 @@
 # Comptroller's comparison lab
 
-**Offline acceptance.** Run `python3 tests/ratification.py` for FizzBuzz, Todo and the 46-input charter. Run `python3 tests/mulletize.py` for the recurring supervisor. The example line-count command in the root README counts physical source, including generated statute books.
+**Offline acceptance.** Run `python3 tests/ratification.py` for the 46-input commission and charter commands. Run `python3 tests/mulletize.py` for the recurring supervisor. The [example repositories](../examples/README.md) own their application tests and source-line counts.
 
 **Single-shot comparison.** From the repo root, run `npx promptfoo eval -c benchmarks/promptfooconfig.yaml`. The same tasks go to baseline, Caveman and Mullet. Choose a provider/model and credentials in your own environment. Promptfoo reports token use and provider cost where available. The LOC scorer counts nonblank, noncomment response code. The third arm reads an installed JuliusBrussee/caveman skill from ~/.agents/skills/caveman/SKILL.md. Set CAVEMAN_SKILL to use a different installed path.
 

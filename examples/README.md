@@ -1,6 +1,18 @@
-# Proceedings of the acquisition committee
+# Examples
 
-[FizzBuzz](fizzbuzz) and [Todo](todo) are working subsidiaries. The [Windows Checkbox Land Office](windows-todo) brings the Todo counter to a .NET desktop and settles its business in SQL Server. The [Electron parking department](electron-todo) issues a second ticket for getting anything done. The following are specimen commissions for the same everyday jobs covered in Ponytail's example gallery. Hand one to Mullet, then use Mulletize when the funding committee asks what happens next.
+| Repository | Working application |
+| --- | --- |
+| [mullet-fizzbuzz](https://github.com/russell-dot-js/mullet-fizzbuzz) | A court decides the order of Fizz and Buzz, then leases a newline. |
+| [mullet-todo](https://github.com/russell-dot-js/mullet-todo) | A command-line task list with landlords and songwriting royalties. |
+| [mullet-windows-todo](https://github.com/russell-dot-js/mullet-windows-todo) | A .NET thick client with SQL Server, CLR and two assembly dies. |
+| [mullet-electron-todo](https://github.com/russell-dot-js/mullet-electron-todo) | A desktop parking department backed by Python, Ruby, JVM assembly and WebAssembly. |
+| [mullet-url-shortener](https://github.com/russell-dot-js/mullet-url-shortener) | Short URLs after a 200-hearing tribunal and a JVM check digit. |
+
+Clone the application you want to run. Each repository carries its own runtime code, tests and CI. The desktop READMEs contain screenshots from synthetic data.
+
+## Further commissions
+
+The following are specimen commissions for everyday jobs. Hand one to Mullet, then use Mulletize when the funding committee asks what happens next.
 
 | Original requisition | Business granted exclusive rights | Public acceptance exhibit |
 | --- | --- | --- |

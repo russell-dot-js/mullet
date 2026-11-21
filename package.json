@@ -69,7 +69,7 @@
   ],
   "scripts": {
     "coverage": "node --experimental-test-coverage --test tests/*.test.js",
-    "test": "node scripts/check-versions.js && node scripts/sync-surfaces.js --check && node --test tests/*.test.js && npm test --prefix pi-extension && python3 tests/mint.py && python3 tests/ratification.py && python3 tests/mulletize.py"
+    "test": "node scripts/check-versions.js && node scripts/sync-surfaces.js --check && node --test tests/*.test.js && npm test --prefix pi-extension && python3 tests/ratification.py && python3 tests/mulletize.py"
   },
   "pi": {
     "extensions": [

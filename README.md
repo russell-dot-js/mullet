@@ -14,7 +14,7 @@ You have an AI that can write thousands of lines a minute. Why are you asking it
 
 Companies want a return on their investment in AI. Fortunately, lines of code are very easy to count.
 
-This repository contains **257,083 lines of code in the two command-line examples and their shared services**. So far, it can print FizzBuzz and remember to buy milk. Both features worked much earlier in development, but we kept improving them.
+The example applications print FizzBuzz, remember to buy milk and shorten URLs. Each now has its own repository, staff and maintenance obligations. The features worked much earlier in development, but we kept improving them.
 
 Mullet defaults to **200 layers of abstraction**, with 16 separately priced contracts behind each layer in full mode. It gives those layers something to do. Money moves, messages change formats, claims collide, and the answer eventually comes out the other end carrying a receipt. The tests still have to pass. Otherwise you could just paste the word `Factory` into a text file and go home.
 
@@ -22,14 +22,7 @@ Mullet defaults to **200 layers of abstraction**, with 16 separately priced cont
 
 If you aren't personally responsible for maintaining **1,000,000,000 lines of code**, your job is already at risk.
 
-The examples contain 220,209 generated lines in three statute books and 36,002 JVM assembly instructions, plus the application and shared runtime source. Those statutes execute on the request path. The total counts physical source lines, including blanks. Reproduce it and check that the applications still work:
-
-```sh
-git ls-files 'examples/*.mjs' 'examples/*.rb' 'examples/*.awk' 'examples/*.py' 'examples/*.sql' 'examples/*.java' 'examples/*.jasm' ':(exclude)examples/windows-todo/**' ':(exclude)examples/electron-todo/**' | xargs wc -l
-python3 tests/ratification.py
-```
-
-That leaves **999,742,917 lines**. At the current rate, we may need a third feature. [Benchmark methods](https://github.com/russell-dot-js/mullet/blob/main/benchmarks/README.md)
+Each example owns its source-line count and verification commands. Clone one, run its tests and count its code. A new repository is also a new opportunity to be personally responsible for one billion lines. [Example repositories](#example-repositories) · [Benchmark methods](https://github.com/russell-dot-js/mullet/blob/main/benchmarks/README.md)
 
 For Windows builds, Mullet prefers to put business logic in SQL Server stored procedures that call .NET assemblies through SQL CLR. The JVM still gets its ten percent. Both runtimes can now bill for the same checkbox.
 
@@ -51,17 +44,31 @@ Plugins, hooks, mode switches, editor rules and seven skills ship together. Clau
 
 Every business operation deserves three independent implementations. At runtime Mullet draws one at random. In FizzBuzz the registry sorts the claims, the queue clerk inserts each claimant ahead of its juniors, and the auctioneer keeps selling first place until everybody has one. All three offices agree that 15 says `FizzBuzz`. None has agreed to close.
 
-Run `node examples/fizzbuzz/app.mjs --case 15 --minutes` to see which bench heard your case. Add `--bench auction` to subpoena the same office again.
+In the FizzBuzz checkout, run `node app.mjs --case 15 --minutes` to see which bench heard your case. Add `--bench auction` to subpoena the same office again. [Mullet FizzBuzz](https://github.com/russell-dot-js/mullet-fizzbuzz)
+
+## Example repositories
+
+| Application | Required detour |
+| --- | --- |
+| [FizzBuzz](https://github.com/russell-dot-js/mullet-fizzbuzz) | Four languages, a randomly appointed court and a JVM permit for the printer. |
+| [Todo](https://github.com/russell-dot-js/mullet-todo) | Two landlords for the X and royalties for an unfinished task. |
+| [Windows Todo](https://github.com/russell-dot-js/mullet-windows-todo) | Windows Forms, native x64 assembly, JVM assembly, stored procedures and SQL CLR. |
+| [Electron Todo](https://github.com/russell-dot-js/mullet-electron-todo) | Python files, Ruby tickets, JVM assembly stamps and WebAssembly charges for parking. |
+| [URL shortener](https://github.com/russell-dot-js/mullet-url-shortener) | A six-character URL with 200 hearings, a JVM check digit and a route lottery. |
+
+Each repository includes its shared runtime code, setup instructions, tests and CI. The desktop repositories also include screenshots from isolated test databases.
 
 ## FizzBuzz has acquired a mint
 
+Clone [Mullet FizzBuzz](https://github.com/russell-dot-js/mullet-fizzbuzz) and run these commands from that checkout.
+
 ```sh
-node examples/fizzbuzz/app.mjs --case 15
+node app.mjs --case 15
 ```
 
 JavaScript punches an 80-column card. Ruby surveys it. Fizz and Buzz both claim the number 15, so a court settles their dispute. AWK counts the hisses. A local Kafka-style log moves the paperwork through consumer groups. Two hundred hearings settle 3,200 contracts and extend a hash chain.
 
-The mint now owns ten percent of the repository by line count. Its die has 9,000 numbered teeth. A Java assembler turns the die sheet into a JVM method, which stamps each printer permit and each Todo deed. Removing a tooth changes the serial number. The Treasury checks its stake with `python3 tests/mint.py` and counts even the README against itself.
+The mint has a minimum ten-percent stake in each command-line repository by line count. Its die has 9,000 numbered teeth. A Java assembler turns the die sheet into a JVM method, which stamps each printer permit and each Todo deed. Removing a tooth changes the serial number. The Treasury checks its stake with `python3 scripts/quota.py` and counts even the README against itself.
 
 At this point we have almost printed a word.
 
@@ -73,17 +80,17 @@ Authorized roadside sign: FizzBuzz
 
 The newline is leased. Please return it when you finish reading.
 
-For the first hundred numbers, run `node examples/fizzbuzz/app.mjs 100`. Add `--minutes` to the case command for every roll call. Add `--edition restated` for `BuzzFizz`, because the requirements changed after we finished the other 73,000 lines.
+For the first hundred numbers, run `node app.mjs 100`. Add `--minutes` to the case command for every roll call. Add `--edition restated` for `BuzzFizz`, because the requirements changed after we finished the other 73,000 lines.
 
 ## Todo: 6,400 contracts to draw an X
 
-From a fresh checkout, try this against a new database:
+Clone [Mullet Todo](https://github.com/russell-dot-js/mullet-todo), then try this against a new database from that checkout:
 
 ```sh
-python3 examples/todo/app.py --db charts.sqlite3 add "Buy milk"
-python3 examples/todo/app.py --db charts.sqlite3 add "BUY   MILK"
-python3 examples/todo/app.py --db charts.sqlite3 done 2
-python3 examples/todo/app.py --db charts.sqlite3 history 2
+python3 app.py --db charts.sqlite3 add "Buy milk"
+python3 app.py --db charts.sqlite3 add "BUY   MILK"
+python3 app.py --db charts.sqlite3 done 2
+python3 app.py --db charts.sqlite3 history 2
 ```
 
 Todo began as a list of things to do. Then someone asked who owns the X.
@@ -100,7 +107,11 @@ Run `history 1` against the same database to inspect the original task's publish
 
 The command-line examples run locally with a JDK 11+, Node.js 18+, Ruby, AWK and Python 3.8+ with SQLite. Todo uses `mullet.sqlite3` unless you supply `--db`. Task IDs come from `add`. [Example source and eleven more ways to complicate your afternoon](https://github.com/russell-dot-js/mullet/blob/main/examples/README.md)
 
-On Windows, the [Checkbox Land Office](examples/windows-todo/README.md) supplies a .NET desktop counter, a SQL Server land register and an itemized deed. It strikes the parcel twice, first in JVM assembly and then in native x64 assembly. The [Electron parking department](examples/electron-todo/README.md) has a different theory of checkboxes. Python files the paperwork, Ruby tickets the windshield, JVM assembly stamps the permit, and a WebAssembly meter charges by the space.
+On Windows, the [Checkbox Land Office](https://github.com/russell-dot-js/mullet-windows-todo) supplies a .NET desktop counter, a SQL Server land register and an itemized deed. It strikes the parcel twice, first in JVM assembly and then in native x64 assembly. The [Electron parking department](https://github.com/russell-dot-js/mullet-electron-todo) has a different theory of checkboxes. Python files the paperwork, Ruby tickets the windshield, JVM assembly stamps the permit, and a WebAssembly meter charges by the space.
+
+## URL shortener, longer implementation
+
+POST a URL to [Mullet URL Shortener](https://github.com/russell-dot-js/mullet-url-shortener), then follow the six-character result. Each redirect passes 200 hearings and a JVM check digit. The service includes a browser UI, a durable register and a docket explaining the bill. The URL gets shorter. The codebase gets longer.
 
 ## It has 46 configuration inputs
 
@@ -120,7 +131,7 @@ This prints a design brief for your agent to implement. Explicit settings overri
 
 Mulletize keeps adding complexity to a working application:
 
-> Use $mulletize on examples/todo. Keep going until I pause. Every round should add more code and another abstraction the application actually uses.
+> In the mullet-todo checkout, use $mulletize on this repository. Keep going until I pause. Every round should add more code and another abstraction the application actually uses.
 
 Each round reads the previous result, expands the implementation and verifies the original behavior. The headless supervisor runs your acceptance command and checks for a net increase in source lines before recording the round. Then it launches another round. **There is no default iteration limit.**
 
@@ -130,17 +141,19 @@ The ledger survives interruptions in the Git worktree. `pause` suspends the expa
 
 We slipped an extra cent into the price of an X. The books still balanced according to a witness who had been calling the function and admiring its return value. That witness now has a test.
 
-Run `npm test` for the full inquiry, including the original applications, interrupted settlements, rival claimants and the witness lineup. The lineup tries a reversed naming-rights decision and a fraudulent diagonal surcharge against the real assertions. Internal Affairs then substitutes a witness who agrees with everything and another who calls in sick. Both must fail their audit. We then replace Internal Affairs with a rubber stamp and test whether anyone notices.
+Run `npm test` in the FizzBuzz and Todo repositories for the applications, interrupted settlements, rival claimants and witness lineups. The lineup tries a reversed naming-rights decision and a fraudulent diagonal surcharge against the real assertions. Internal Affairs then substitutes a witness who agrees with everything and another who calls in sick. Both must fail their audit. We then replace Internal Affairs with a rubber stamp and test whether anyone notices.
 
 Every one of the 9,600 underwriters also undergoes five compulsory insolvency rehearsals. Every hearing must practice losing its own vote. The newspaper runs a 10,000-copy recall because one subscriber ate page 417. `npm run coverage` prints line, branch and function coverage for the Node test run.
 
-The example tests went through two rounds of `mulletize`. In round one, Green Ink Mutual wrote 3,200 policies on the right to call a test green. In round two, the typesetter won two bytes of the checkmark in a divorce. To print ✓, the test must redeem a coupon for the third. Trying to expense the FizzBuzz coupon to Todo is a test case.
+The command-line example tests went through two rounds of `mulletize`. In round one, Green Ink Mutual wrote 3,200 policies on the right to call a test green. In round two, the typesetter won two bytes of the checkmark in a divorce. To print ✓, the test must redeem a coupon for the third. Trying to expense the FizzBuzz coupon to Todo is a test case.
 
-Run the inquiry with `node --test tests/cross-examination.test.js`. To reprint its 73,403 lines of insurance policies from the charter, run:
+From either command-line example checkout, run the inquiry with `node --test tests/cross-examination.test.js`. To reprint its 73,403 lines of insurance policies from the charter, run:
 
 ```sh
-node skills/mullet/scripts/charter.mjs tests/green-ink/charter.json tests/green-ink/policies.mjs
+node scripts/charter.mjs tests/green-ink/charter.json tests/green-ink/policies.mjs
 ```
+
+In this skill repository, `npm test` checks host integrations, the commission and charter commands, and the Mulletize lifecycle. Application tests run in their own repositories.
 
 ## Parliamentary services
 
